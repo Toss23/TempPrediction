@@ -28,7 +28,7 @@ train_x = np.array([dataset[0:108]])
 train_y = np.array([dataset[108:120]])
 
 future_x = np.array([])
-current_dataset = dataset.copy()
+current_dataset = dataset.copy()  # Копия исходного датасета для модификаций
 
 model = k.Sequential()
 model.add(k.layers.LSTM(1, return_sequences=True, input_shape=(108, 1)))
@@ -38,7 +38,7 @@ model.compile(optimizer='adam', loss='mse')
 
 root = Tk()
 root.title("Нейросеть")
-root.geometry("480x400")
+root.geometry("480x400")  # Увеличил высоту окна для дополнительных кнопок
 root.resizable(False, False)
 root.iconbitmap("icon.ico")
 
@@ -112,9 +112,10 @@ def load_dataset():
 
 
 def predict_year():
+    # Создаем всплывающее окно для выбора года
     popup = Toplevel()
     popup.title("Выбор года предсказания")
-    popup.geometry("300x250")
+    popup.geometry("300x250")  # Увеличил высоту для дополнительных кнопок
     popup.resizable(False, False)
 
     label = Label(popup, text="Выберите на сколько лет предсказать:")
@@ -124,6 +125,7 @@ def predict_year():
         popup.destroy()
         predict(years)
 
+    years_options = [1, 2, 3, 4, 5]
     buttonYear1 = Button(popup, text=f"Через 1 год", command=lambda y=1: predict_for_years(y))
     buttonYear1.pack(pady=3)
 
@@ -138,7 +140,6 @@ def predict_year():
 
     buttonYear5 = Button(popup, text=f"Через 5 лет", command=lambda y=5: predict_for_years(y))
     buttonYear5.pack(pady=3)
-
 
 def predict(years=1):
     global current_dataset, future_x
